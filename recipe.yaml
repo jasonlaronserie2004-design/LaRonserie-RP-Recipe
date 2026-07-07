@@ -1,0 +1,114 @@
+$engine: 3
+$onesync: on
+name: laronserie-RP
+author: Simon / ChatGPT
+description: Serveur RP français ESX Legacy - La Ronserie RP
+version: 1.0.0
+
+tasks:
+  - action: download_github
+    src: https://github.com/esx-framework/esx-recipes
+    ref: legacy
+    dest: ./tmp/esx-recipes
+
+  - action: move_path
+    src: ./tmp/esx-recipes/legacy/resources
+    dest: ./resources
+
+  - action: connect_database
+
+  - action: query_database
+    file: ./resources/[core]/es_extended/es_extended.sql
+
+  - action: write_file
+    file: ./server.cfg
+    data: |
+      # ==============================
+      # La Ronserie RP - server.cfg
+      # ==============================
+
+      sv_hostname "laronserie-RP | Serveur RP Français"
+      sets sv_projectName "laronserie-RP"
+      sets sv_projectDesc "Serveur RP français sérieux/fun basé sur ESX Legacy"
+      sets locale "fr-FR"
+
+      # Slots
+      sv_maxclients 48
+
+      # OneSync
+      set onesync on
+
+      # Database
+      set mysql_connection_string "{{dbConnectionString}}"
+
+      # Clés serveur
+      sv_licenseKey "CHANGE_MOI"
+      steam_webApiKey "CHANGE_MOI"
+
+      # Sécurité / ressources
+      ensure mapmanager
+      ensure chat
+      ensure spawnmanager
+      ensure sessionmanager
+      ensure hardcap
+      ensure baseevents
+
+      # ESX Core
+      ensure oxmysql
+      ensure es_extended
+
+      # ESX Addons essentiels
+      ensure esx_menu_default
+      ensure esx_menu_list
+      ensure esx_menu_dialog
+      ensure esx_identity
+      ensure esx_skin
+      ensure skinchanger
+      ensure esx_society
+      ensure esx_billing
+      ensure esx_status
+      ensure esx_basicneeds
+      ensure esx_optionalneeds
+      ensure esx_license
+      ensure esx_datastore
+      ensure esx_addonaccount
+      ensure esx_addoninventory
+
+      # Jobs de base
+      ensure esx_policejob
+      ensure esx_ambulancejob
+      ensure esx_mechanicjob
+      ensure esx_taxijob
+
+      # Gameplay
+      ensure esx_vehicleshop
+      ensure esx_garage
+      ensure esx_property
+      ensure esx_banking
+      ensure esx_shops
+      ensure esx_weaponshop
+      ensure esx_drugs
+
+      # Vocal
+      # ensure pma-voice
+
+      # HUD / Interface La Ronserie
+      # ensure laronserie_hud
+      # ensure laronserie_pausemenu
+
+      # Mappings / MLO
+      # ensure laronserie_mappings
+
+      # Véhicules
+      # ensure laronserie_vehicles
+
+      # Permissions admin
+      add_principal group.admin group.user
+      add_ace group.admin command allow
+      add_ace group.admin command.quit deny
+
+      # Remplace par ton license Rockstar
+      add_principal identifier.license:CHANGE_MOI group.admin
+
+  - action: remove_path
+    path: ./tmp
