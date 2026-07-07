@@ -11,10 +11,6 @@ tasks:
     ref: legacy
     dest: ./tmp/esx-recipes
 
-  - action: move_path
-    src: ./tmp/esx-recipes/legacy/resources
-    dest: ./resources
-
   - action: connect_database
 
   - action: query_database
